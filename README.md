@@ -11,7 +11,7 @@
 
 ## 安装
 
-您需要提前在本地安装[Node.js](https://nodejs.org/en/)，版本号为：[12.x、14.x]，再使用[Git](https://git-scm.com/)克隆项目或者直接下载项目后，然后通过`终端命令行`执行以下命令。
+您需要提前在本地安装[Node.js](https://nodejs.org/en/)，版本号为：14.x，再使用[Git](https://git-scm.com/)克隆项目或者直接下载项目后，然后通过`终端命令行`执行以下命令。
 
 ```bash
 # 切换到项目根目录
