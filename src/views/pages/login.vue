@@ -39,6 +39,9 @@
             <el-form-item>
               <el-button type="primary" @click="dataFormSubmitHandle()" class="w-percent-100">{{ $t('login.title') }}</el-button>
             </el-form-item>
+            <el-form-item>
+              <el-button type="primary" class="w-percent-100" @click="sign()">去注册</el-button>
+            </el-form-item>
           </el-form>
         </div>
         <div class="login-footer">
@@ -49,6 +52,29 @@
         </div>
       </main>
     </div>
+    <el-dialog
+        title="请输入注册基本信息"
+        :visible.sync="dialogVisible"
+        width="60%">
+      <el-form ref="form" :model="form" label-width="80px">
+        <el-form-item label="账号">
+          <el-input v-model="form.username"></el-input>
+        </el-form-item>
+        <el-form-item label="密码">
+          <el-input v-model="form.userpassword"></el-input>
+        </el-form-item>
+        <el-form-item label="手机号">
+          <el-input v-model="form.userphone"></el-input>
+        </el-form-item>
+        <el-form-item label="昵称">
+          <el-input v-model="form.name"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="adduser()">确 定</el-button>
+  </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -56,6 +82,7 @@
 import Cookies from 'js-cookie'
 import debounce from 'lodash/debounce'
 import { getUUID } from '@/utils'
+import axios from "axios";
 export default {
   data () {
     return {
@@ -65,7 +92,9 @@ export default {
         password: 'admin',
         uuid: '',
         captcha: ''
-      }
+      },
+      dialogVisible:false,
+      form:{}
     }
   },
   computed: {
@@ -91,6 +120,22 @@ export default {
     getCaptcha () {
       this.dataForm.uuid = getUUID()
       this.captchaPath = `${window.SITE_CONFIG['apiURL']}/captcha?uuid=${this.dataForm.uuid}`
+    },
+    //注册
+    sign:function (){
+      this.dialogVisible=true;
+    },
+    //添加
+    adduser:function (){
+     // alert(0)
+      axios.post("http://localhost:9111/v1/adduser",this.form).then(resp=>{
+          if(resp.data.success){
+            alert(resp.data.msg);
+            this.dialogVisible=false;
+          }else{
+            alert(resp.data.msg);
+          }
+      })
     },
     // 表单提交
     dataFormSubmitHandle: debounce(function () {
