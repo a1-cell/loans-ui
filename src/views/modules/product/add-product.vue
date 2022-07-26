@@ -34,7 +34,7 @@
                </el-select>
            </el-form-item>
            <el-form-item>
-               <el-button type="primary" @click="edit">提交</el-button>
+               <el-button type="primary" @click="add">提交</el-button>
            </el-form-item>
        </el-form>
        {{form}}
@@ -42,14 +42,12 @@
 </template>
 
 <script>
-    //import axios from 'axios'
+    import axios from 'axios'
     export default {
         name: "add-product",
         data(){
             return{
-                form:{
-
-                },
+                form:{},
                 productType:[{typeName:"信用贷"},
                     {typeName:"抵押贷"}],
                 returnWay:[{returnWay:'等额本息'},
@@ -57,8 +55,8 @@
             }
         },
         methods:{
-            edit(){
-                axios.post("http://localhost:9105/v1/product/add",this.form).then((resp)=>{
+            add(){
+                axios.post("http://localhost:9105/v1/add",this.form).then((resp)=>{
                     alert("产品添加成功");
                 })
             }
