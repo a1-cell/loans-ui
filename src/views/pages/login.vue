@@ -42,6 +42,8 @@
             <el-form-item>
               <el-button type="primary" class="w-percent-100" @click="sign()">去注册</el-button>
             </el-form-item>
+<!--            第三方登录：<a href="http://openapi.baidu.com/oauth/2.0/authorize?client_id=kUZ1XIRxWtP9wLBNG6pS7fZp&response_type=code&redirect_uri=http://localhost:8080/baidu">百度</a>-->
+            <div>第三方登陆：<a @click="otherlogin" href="http://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=0KarGjdTCIDKlbifVwmSLG1s&redirect_uri=http://localhost/baidu"><img src="baidu.png" style="width: 35px; height: 35px"></a></div>
           </el-form>
         </div>
         <div class="login-footer">
@@ -95,6 +97,7 @@ export default {
       },
       dialogVisible:false,
       form:{}
+
     }
   },
   computed: {
@@ -136,6 +139,10 @@ export default {
             alert(resp.data.msg);
           }
       })
+    },
+    //第三方登录
+    otherlogin:function(){
+      this.$router.replace({ name: 'home' })
     },
     // 表单提交
     dataFormSubmitHandle: debounce(function () {
