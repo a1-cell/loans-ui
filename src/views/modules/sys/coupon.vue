@@ -1,43 +1,51 @@
 <template>
   <div>
-    <el-form ref="form" :model="form" label-width="80px">
-      <el-form-item label="活动名称">
-        <el-input v-model="form.name"></el-input>
+    <el-form ref="form" :model="coupon" label-width="80px">
+      <el-form-item label="发布券名">
+        <el-input v-model="coupon.cname"></el-input>
       </el-form-item>
-      <el-form-item label="活动区域">
-        <el-select v-model="form.region" placeholder="请选择活动区域">
-          <el-option label="区域一" value="shanghai"></el-option>
-          <el-option label="区域二" value="beijing"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="活动时间">
-        <el-col :span="11">
-          <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
-        </el-col>
-        <el-col class="line" :span="2">-</el-col>
-        <el-col :span="11">
-          <el-time-picker placeholder="选择时间" v-model="form.date2" style="width: 100%;"></el-time-picker>
-        </el-col>
-      </el-form-item>
-      <el-form-item label="即时配送">
-        <el-switch v-model="form.delivery"></el-switch>
-      </el-form-item>
-      <el-form-item label="活动性质">
-        <el-checkbox-group v-model="form.type">
-          <el-checkbox label="美食/餐厅线上活动" name="type"></el-checkbox>
-          <el-checkbox label="地推活动" name="type"></el-checkbox>
-          <el-checkbox label="线下主题活动" name="type"></el-checkbox>
-          <el-checkbox label="单纯品牌曝光" name="type"></el-checkbox>
-        </el-checkbox-group>
-      </el-form-item>
-      <el-form-item label="特殊资源">
-        <el-radio-group v-model="form.resource">
-          <el-radio label="线上品牌商赞助"></el-radio>
-          <el-radio label="线下场地免费"></el-radio>
+      <el-form-item label="券的类型">
+        <el-radio-group v-model="coupon.tid">
+          <el-radio label="1">加息</el-radio>
+          <el-radio label="2">减息</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="活动形式">
-        <el-input type="textarea" v-model="form.desc"></el-input>
+      <el-form-item label="利率">
+        <el-input v-model="coupon.interest"></el-input>
+      </el-form-item>
+      <el-form-item label="使用类型">
+        <el-select v-model="coupon.type" placeholder="请选择使用类型">
+          <el-option label="电脑官网" value="1"></el-option>
+          <el-option label="手机公众号" value="2"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="领取方式">
+        <el-radio-group v-model="coupon.grante">
+          <el-radio label="1">官网</el-radio>
+          <el-radio label="2">公众号</el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item label="发行量">
+        <el-input v-model="coupon.num"></el-input>
+      </el-form-item>
+      <el-form-item label="有效天数">
+        <el-input v-model="coupon.days"></el-input>
+      </el-form-item>
+      <el-form-item label="活动时间">
+        <el-col :span="5">
+          <el-date-picker type="datetime" placeholder="选择开始日期" v-model="coupon.createTime" style="width: 100%;"></el-date-picker>
+        </el-col>
+        <el-col class="line" :span="2">-----------------</el-col>
+        <el-col :span="5">
+          <el-date-picker type="datetime" placeholder="选择结束时间" v-model="coupon.endTime" style="width: 100%;"></el-date-picker>
+        </el-col>
+      </el-form-item>
+
+      <el-form-item label="最少投资">
+        <el-input v-model="coupon.money"></el-input>
+      </el-form-item>
+      <el-form-item label="最大投资">
+        <el-input v-model="coupon.maxMoney"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">立即创建</el-button>
@@ -52,6 +60,7 @@
 <script>
 import mixinViewModule from '@/mixins/view-module'
 import AddOrUpdate from './role-add-or-update'
+import axios from "axios";
 export default {
   name: "coupon",
   mixins: [mixinViewModule],
@@ -65,11 +74,30 @@ export default {
       },
       dataForm: {
         name: ''
-      }
+      },
+      coupon:{}
     }
   },
   components: {
     AddOrUpdate
+  },
+  methods:{
+    test(){
+      axios.get('http://localhost:9011/test/test1').then(resp=>{
+        console.log(resp)
+      })
+    },
+    onSubmit(){
+      axios.post('http://localhost:9111/coupon/add',this.coupon).then(resp=>{
+        console.log(resp)
+        if(resp.data){
+          this.$message.success("发布成功，请等待审核")
+          location.reload();
+        }
+      })
+    }
+  },
+  created() {
   }
 }
 </script>

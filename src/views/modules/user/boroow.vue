@@ -1,6 +1,11 @@
 <template>
   <div>
+
     <el-form ref="form" :model="form" label-width="80px">
+      <el-form-item label="贷款形式">
+        <el-radio v-model="radio" label="1">个人贷款</el-radio>
+        <el-radio v-model="radio" label="2">企业贷款</el-radio>
+      </el-form-item>
       <el-form-item label="借款标题">
         <el-input v-model="form.borrowName"></el-input>
       </el-form-item>
@@ -69,6 +74,32 @@
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
+      <el-form-item label="公司/企业名称">
+        <el-input v-model="form.companyname"></el-input>
+      </el-form-item>
+      <el-form-item label="公司/企业地址">
+        <el-input v-model="form.companyaddress"></el-input>
+      </el-form-item>
+      <el-form-item label="公司/企业电话">
+        <el-input v-model="form.companyphone"></el-input>
+      </el-form-item>
+      <el-form-item label="小区名称" v-if="radio==2">
+        <el-input v-model="form.housename"></el-input>
+      </el-form-item>
+      <el-form-item label="小区地址" v-if="radio==2">
+        <el-input v-model="form.houseaddress"></el-input>
+      </el-form-item>
+      <el-form-item label="房产照片" v-if="radio==2">
+        <el-upload
+            class="avatar-uploader"
+            action="http://localhost:9112/v1/upload2"
+            :show-file-list="false"
+            :on-success="handleAvatarSuccess3"
+            :before-upload="beforeAvatarUpload">
+          <img v-if="form.houseUrl!='' " :src="form.houseUrl" class="avatar">
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
+      </el-form-item>
     </el-form>
     <el-button type="success" plain @click="add()">贷款</el-button>
   </div>
@@ -83,9 +114,11 @@ export default {
     return{
       form:{
         cardUrl1:'',
-        cardUrl2:''
+        cardUrl2:'',
+        houseUrl:''
       },
-      options:[]
+      options:[],
+      radio:null
     }
   },
   methods:{
@@ -115,6 +148,9 @@ export default {
     },
     handleAvatarSuccess2(res, file) {
       this.form.cardUrl2=res;
+    },
+    handleAvatarSuccess3(res, file) {
+      this.form.houseUrl=res;
     },
     beforeAvatarUpload(file) {
       const isJPG =true;
