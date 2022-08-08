@@ -23,6 +23,10 @@
           prop="tid"
           label="券类型"
           width="120">
+        <span slot-scope="scope">
+          <span v-if="scope.row.tid===1">加息</span>
+          <span v-if="scope.row.tid===2">减息</span>
+        </span>
       </el-table-column>
       <el-table-column
           prop="type"
@@ -83,14 +87,6 @@
           <span v-if="scope.row.statue==='2'">审核拒绝</span>
           <span v-if="scope.row.statue==='3'">过期</span>
         </span>
-      </el-table-column>
-      <el-table-column
-          fixed="right"
-          label="操作"
-          width="100">
-        <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row)" type="text" size="small">审核</el-button>
-        </template>
       </el-table-column>
     </el-table>
 

@@ -1,12 +1,11 @@
 <template>
   <el-card shadow="never" class="aui-card--fill">
     <div class="mod-home">
-      <h3>项目介绍</h3>
+      <h3>欢迎</h3>
       <ul>
-        <li><a href="https://gitee.com/renrenio/renren-ui" target="_blank">renren-security</a>后台管理前端功能，提供一套更优的前端解决方案</li>
-        <li>前后端分离，通过token进行数据交互，可独立部署</li>
-        <li>动态菜单，通过菜单管理统一管理访问路由</li>
-        <li>演示地址：<a href="http://demo.open.renren.io/renren-security" target="_blank">http://demo.open.renren.io/renren-security</a> (账号密码：admin/admin)</li>
+        <li>欢迎使用博天金融</li>
+        <li>诚信</li>
+        <li>快捷</li>
       </ul>
       <h3>获取帮助</h3>
       <ul>
